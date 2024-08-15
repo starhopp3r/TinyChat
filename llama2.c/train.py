@@ -28,7 +28,7 @@ from model import Transformer, ModelArgs
 from torch.distributed import destroy_process_group, init_process_group
 from torch.nn.parallel import DistributedDataParallel as DDP
 
-from tinystories import Task
+from tinychat import Task
 from export import model_export
 
 # -----------------------------------------------------------------------------
