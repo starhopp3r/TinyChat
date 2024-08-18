@@ -12,6 +12,7 @@ max_workers = 8
 basic_words_file = 'basic/basicwords.csv'
 sysprompt_file = 'sysprompt.txt'
 usrprompt_file = 'usrprompt.txt'
+out_file = 'tinychat.txt'
 
 startings = ['greeting', 'question', 'suggestion']
 feelings = ['happiness', 'surprise', 'badness', 'fearfulness', 'anger', 'disgust', 'sadness']
@@ -60,7 +61,7 @@ def generate_tinychat_data(system_prompt, user_prompt, noun_choice, verb_choice,
         # Extract the generated content
         output_text = completion.choices[0].message.content
         # Open the text file in append mode and write the output
-        with open("tinychat.txt", "a") as file:
+        with open(out_file, "a") as file:
             file.write(output_text + "\n")
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -78,7 +79,7 @@ def generate_training_data():
     # Shuffle the combinations
     random.shuffle(combinations)
     # Limit to 1,000,000 combinations
-    combinations = combinations[:1000000]
+    combinations = combinations[:num_data]
     # Get system and user prompts
     system_prompt, user_prompt = get_prompt()
     # Generate data concurrently for all combinations of verb, noun, and adjective
