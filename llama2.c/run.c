@@ -1,5 +1,6 @@
 /* Inference for Llama-2 Transformer model in pure C */
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
