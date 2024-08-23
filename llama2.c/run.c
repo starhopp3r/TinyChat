@@ -14,6 +14,11 @@
     #include <unistd.h>
     #include <sys/mman.h>
 #endif
+
+// User turn check
+int user_idx;
+int8_t user_turn = 1;
+
 // ----------------------------------------------------------------------------
 // Transformer model
 
@@ -434,6 +439,12 @@ void safe_printf(char *piece) {
     // because some of the other bytes can be various control codes, backspace, etc.
     if (piece == NULL) { return; }
     if (piece[0] == '\0') { return; }
+    // Prevent the [/INST] tag from being printed and pass the turn to the User
+    if (piece[1] == '[' || strcmp(piece, "/") == 0 || strcmp(piece, "INST") == 0 || strcmp(piece, "]") == 0) {
+        user_idx = 0;
+        user_turn = 0; 
+        return; 
+    }
     if (piece[1] == '\0') {
         unsigned char byte_val = piece[0];
         if (!(isprint(byte_val) || isspace(byte_val))) {
@@ -810,10 +821,8 @@ void chat(Transformer *transformer, Tokenizer *tokenizer, Sampler *sampler,
     char rendered_prompt[1152];
     int num_prompt_tokens = 0;
     int* prompt_tokens = (int*)malloc(1152 * sizeof(int));
-    int user_idx;
 
     // start the main loop
-    int8_t user_turn = 1; // user starts
     int next;        // will store the next token in the sequence
     int token;       // stores the current token to feed into the transformer
     int prev_token;
@@ -853,7 +862,7 @@ void chat(Transformer *transformer, Tokenizer *tokenizer, Sampler *sampler,
             encode(tokenizer, rendered_prompt, 1, 0, prompt_tokens, &num_prompt_tokens);
             user_idx = 0; // reset the user index
             user_turn = 0;
-            printf("Assistant: ");
+            printf("Assistant:");
         }
 
         // determine the token to pass into the transformer next
@@ -866,17 +875,18 @@ void chat(Transformer *transformer, Tokenizer *tokenizer, Sampler *sampler,
         }
         // EOS (=2) token ends the Assistant turn
         if (token == 2) { user_turn = 1; }
-
         // forward the transformer to get logits for the next token
         float* logits = forward(transformer, token, pos);
         next = sample(sampler, logits);
         pos++;
 
         if (user_idx >= num_prompt_tokens && next != 2) {
-            // the Assistant is responding, so print its output
-            char* piece = decode(tokenizer, token, next);
-            safe_printf(piece); // same as printf("%s", piece), but skips "unsafe" bytes
-            fflush(stdout);
+            // Skip printing the BOS token, which is typically represented by 1
+            if (token != 1 && next != 1) { 
+                char *piece = decode(tokenizer, token, next);
+                safe_printf(piece); // same as printf("%s", piece), but skips "unsafe" bytes
+                fflush(stdout);
+            }
         }
         if (next == 2) { printf("\n"); }
     }

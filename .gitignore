@@ -1,5 +1,6 @@
 # TinyChat Dataset
 dataset/tinychat.txt
+llama2.c/model/
 
 # Apple
 .DS_Store
