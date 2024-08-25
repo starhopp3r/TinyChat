@@ -1,6 +1,6 @@
 # TinyChat
 
-TinyChat15M is a 15-million parameter conversational language model built on the Meta Llama 2 architecture. Designed to operate on devices with as little as 60 MB of free memory, TinyChat15M has been successfully deployed on the Sipeed LicheeRV Nano W, a compact RISC-V development board equipped with just 256 MB of DDR3 memory. Inspired by Dr. Andrej Karpathy’s llama2.c project, TinyChat15M showcases that small conversational language models can be both effective and resource-efficient, making advanced AI capabilities more accessible and sustainable. You can find a detailed blog post on this project [here](https://nikhilr.io/posts/TinyChat15M/)
+TinyChat15M is a 15-million parameter conversational language model built on the Meta Llama 2 architecture. Designed to operate on devices with as little as 60 MB of free memory, TinyChat15M has been successfully deployed on the Sipeed LicheeRV Nano W, a compact RISC-V development board equipped with just 256 MB of DDR3 memory. Inspired by Dr. Andrej Karpathy’s llama2.c project, TinyChat15M showcases that small conversational language models can be both effective and resource-efficient, making advanced AI capabilities more accessible and sustainable. You can find a detailed blog post on this project [here](https://nikhilr.io/posts/TinyChat15M/).
 
 ## Usage
 
