@@ -31,7 +31,7 @@ make run
 Now, to run the TinyChat15M Assistant use the following command:
 
 ```
-./run TinyChat15M -t 1.0 -p 0.9 -n 2048 -m chat
+./run TinyChat15M.bin -t 1.0 -p 0.9 -n 2048 -m chat
 ```
 
 Note that the temperature (`-t` flag) and top-p value (`-p` flag) can be set to any number between `0` and `1`. For optimal results, it's recommended to sample with `-t 1.0` and `-p 0.9`, meaning a temperature of `1.0` (default) and top-p sampling at `0.9` (default). Intuitively, top-p sampling prevents tokens with extremely low probabilities from being selected, reducing the chances of getting "unlucky" during sampling and decreasing the likelihood of generating off-topic content. Generally, to control the diversity of samples, you can either adjust the temperature (i.e., vary `-t` between `0` and `1` while keeping top-p off with `-p 0`) or the top-p value (i.e., vary `-p` between `0` and `1` while keeping the temperature at `1`), but it’s advisable not to modify both simultaneously. Detailed explanations of LLM sampling strategies can be found [here](https://peterchng.com/blog/2023/05/02/token-selection-strategies-top-k-top-p-and-temperature/), [here](https://docs.cohere.com/docs/controlling-generation-with-top-k-top-p) and [here](https://huggingface.co/blog/how-to-generate).
