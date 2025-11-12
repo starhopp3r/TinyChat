@@ -15,7 +15,7 @@ git clone https://github.com/starhopp3r/TinyChat.git
 Next, navigate to the llama2.c folder:
 
 ```
-cd llama2.c
+cd TinyChat/llama2.c
 ```
 
 Now, download the TinyChat15M model from Hugging Face:
